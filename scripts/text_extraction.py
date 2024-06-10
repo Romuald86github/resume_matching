@@ -27,13 +27,13 @@ def extract_all_texts(folder_path):
     return texts
 
 if __name__ == "__main__":
-    resume_texts = extract_all_texts('../data/resumes')
-    job_texts = extract_all_texts('../data/jobs')
+    resume_texts = extract_all_texts('data/resumes')
+    job_texts = extract_all_texts('data/jobs')
 
-    with open('../intermediate_data/resume_texts.txt', 'w') as f:
+    with open('intermediate_data/resume_texts.txt', 'w') as f:
         for text in resume_texts:
             f.write("%s\n" % text)
 
-    with open('../intermediate_data/job_texts.txt', 'w') as f:
+    with open('intermediate_data/job_texts.txt', 'w') as f:
         for text in job_texts:
             f.write("%s\n" % text)
