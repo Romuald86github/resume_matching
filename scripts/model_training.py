@@ -21,8 +21,19 @@ if __name__ == "__main__":
     similarity_scores = calculate_similarity(resume_tfidf, job_tfidf)
     np.save('intermediate_data/similarity_scores.npy', similarity_scores)
 
-    X = similarity_scores.flatten().reshape(-1, 1)
-    y = np.array([1] * len(X))
+    # Create positive examples (matching pairs)
+    X_pos = similarity_scores.flatten().reshape(-1, 1)
+    y_pos = np.ones(len(X_pos))
+
+    # Create negative examples (non-matching pairs)
+    job_tfidf_shuffled = np.random.permutation(job_tfidf)
+    similarity_scores_neg = calculate_similarity(resume_tfidf, job_tfidf_shuffled)
+    X_neg = similarity_scores_neg.flatten().reshape(-1, 1)
+    y_neg = np.zeros(len(X_neg))
+
+    # Combine positive and negative examples
+    X = np.vstack((X_pos, X_neg))
+    y = np.hstack((y_pos, y_neg))
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
