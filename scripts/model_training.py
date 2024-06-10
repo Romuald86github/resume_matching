@@ -15,11 +15,11 @@ def calculate_similarity(resume_tfidf, job_tfidf):
     return np.array(similarity_scores)
 
 if __name__ == "__main__":
-    resume_tfidf = np.load('../intermediate_data/resume_tfidf.npy')
-    job_tfidf = np.load('../intermediate_data/job_tfidf.npy')
+    resume_tfidf = np.load('intermediate_data/resume_tfidf.npy')
+    job_tfidf = np.load('intermediate_data/job_tfidf.npy')
 
     similarity_scores = calculate_similarity(resume_tfidf, job_tfidf)
-    np.save('../intermediate_data/similarity_scores.npy', similarity_scores)
+    np.save('intermediate_data/similarity_scores.npy', similarity_scores)
 
     X = similarity_scores.flatten().reshape(-1, 1)
     y = np.array([1] * len(X))
@@ -44,9 +44,9 @@ if __name__ == "__main__":
             best_accuracy = accuracy
             best_model = model
 
-    if not os.path.exists('../models'):
-        os.makedirs('../models')
+    if not os.path.exists('models'):
+        os.makedirs('models')
     
     import pickle
-    with open('../models/best_model.pkl', 'wb') as f:
+    with open('models/best_model.pkl', 'wb') as f:
         pickle.dump(best_model, f)
