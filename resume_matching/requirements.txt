@@ -1,6 +1,0 @@
-Flask
-nltk
-scikit-learn
-pymupdf
-numpy
-gunicorn
