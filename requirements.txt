@@ -4,3 +4,4 @@ scikit-learn
 pymupdf
 numpy
 gunicorn
+PyPDF2
