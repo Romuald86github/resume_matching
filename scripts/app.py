@@ -12,7 +12,7 @@ import PyPDF2
 app = Flask(__name__)
 
 # Load pre-trained model
-with open('../models/best_model.pkl', 'rb') as f:
+with open('models/best_model.pkl', 'rb') as f:
     best_model = pickle.load(f)
 
 # Preprocessing function
