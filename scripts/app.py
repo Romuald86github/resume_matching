@@ -10,7 +10,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'templates'), static_folder='static')
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'templates'), static_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static'))
 
 # Load pre-trained model
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'models', 'best_model.pkl'), 'rb') as f:
