@@ -10,10 +10,10 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__, template_folder='../templates', static_folder='../static')
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'templates'), static_folder='static')
 
 # Load pre-trained model
-with open('../models/best_model.pkl', 'rb') as f:
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'models', 'best_model.pkl'), 'rb') as f:
     best_model = pickle.load(f)
 
 # Preprocessing function
