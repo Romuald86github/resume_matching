@@ -13,11 +13,8 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # Load pre-trained model
-try:
-    with open('models/best_model.pkl', 'rb') as f:
-        best_model = pickle.load(f)
-except Exception as e:
-    print(f"Error loading model: {e}")
+with open('models/best_model.pkl', 'rb') as f:
+    best_model = pickle.load(f)
 
 # Preprocessing function
 nltk.download('punkt')
@@ -32,12 +29,9 @@ def preprocess_text(text):
 
 def extract_text_from_pdf(pdf_path):
     text = ""
-    try:
-        with fitz.open(pdf_path) as doc:
-            for page in doc:
-                text += page.get_text()
-    except Exception as e:
-        print(f"Error extracting text from PDF: {e}")
+    with fitz.open(pdf_path) as doc:
+        for page in doc:
+            text += page.get_text()
     return text
 
 # TF-IDF Vectorizer
@@ -49,41 +43,37 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        resume_files = request.files.getlist('resume_files')
-        job_file = request.files.get('job_file')
-        job_text = request.form.get('job_text')
+    resume_files = request.files.getlist('resume_files')
+    job_file = request.files.get('job_file')
+    job_text = request.form.get('job_text')
 
-        resume_texts = []
-        for file in resume_files:
-            file_path = os.path.join('/tmp', secure_filename(file.filename))
-            file.save(file_path)
-            text = extract_text_from_pdf(file_path)
-            resume_texts.append(preprocess_text(text))
-        
-        if job_file:
-            job_file_path = os.path.join('/tmp', secure_filename(job_file.filename))
-            job_file.save(job_file_path)
-            job_text = preprocess_text(extract_text_from_pdf(job_file_path))
-        else:
-            job_text = preprocess_text(job_text)
+    resume_texts = []
+    for file in resume_files:
+        file_path = os.path.join('/tmp', secure_filename(file.filename))
+        file.save(file_path)
+        text = extract_text_from_pdf(file_path)
+        resume_texts.append(preprocess_text(text))
+    
+    if job_file:
+        job_file_path = os.path.join('/tmp', secure_filename(job_file.filename))
+        job_file.save(job_file_path)
+        job_text = preprocess_text(extract_text_from_pdf(job_file_path))
+    else:
+        job_text = preprocess_text(job_text)
 
-        combined_texts = resume_texts + [job_text]
-        tfidf_matrix = vectorizer.fit_transform(combined_texts)
+    combined_texts = resume_texts + [job_text]
+    tfidf_matrix = vectorizer.fit_transform(combined_texts)
 
-        similarity_scores = cosine_similarity(tfidf_matrix[:-1], tfidf_matrix[-1:])
+    similarity_scores = cosine_similarity(tfidf_matrix[:-1], tfidf_matrix[-1:])
 
-        matches = best_model.predict(similarity_scores)
+    matches = best_model.predict(similarity_scores)
 
-        results = {
-            'similarity_scores': similarity_scores.tolist(),
-            'matches': matches.tolist()
-        }
+    results = {
+        'similarity_scores': similarity_scores.tolist(),
+        'matches': matches.tolist()
+    }
 
-        return jsonify(results)
-    except Exception as e:
-        print(f"Error in prediction: {e}")
-        return jsonify({'error': str(e)}), 500
+    return jsonify(results)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
