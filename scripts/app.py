@@ -22,10 +22,13 @@ nltk.download('stopwords')
 stopwords_set = set(stopwords.words('english'))
 
 def preprocess_text(text):
-    tokens = word_tokenize(text)
-    words = [word.lower() for word in tokens if word.isalpha()]
-    words = [word for word in words if word not in stopwords_set and word not in string.punctuation]
-    return ' '.join(words)
+    if isinstance(text, str):
+        tokens = word_tokenize(text)
+        words = [word.lower() for word in tokens if word.isalpha()]
+        words = [word for word in words if word not in stopwords_set and word not in string.punctuation]
+        return ' '.join(words)
+    else:
+        return ''
 
 def extract_text_from_pdf(pdf_path):
     text = ""
@@ -53,7 +56,7 @@ def predict():
         file.save(file_path)
         text = extract_text_from_pdf(file_path)
         resume_texts.append(preprocess_text(text))
-    
+
     if job_file:
         job_file_path = os.path.join('/tmp', secure_filename(job_file.filename))
         job_file.save(job_file_path)
