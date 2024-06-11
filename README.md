@@ -1,40 +1,32 @@
-# resume_matching
-
-
-Sure, here is the entire content for the README.md file in a single block, so you can copy and paste it directly into your README.md file:
-
-markdown
-Copy code
 # Resume Matching System
 
 This project is designed to automatically match resumes with job descriptions using NLP and advanced machine learning techniques. The system can be deployed both locally and on AWS, allowing HR directors to quickly and easily select the best applicants' resumes for job interviews.
 
 ## Project Structure
 
+\```
 resume-matching/
 ├── data/
-│ ├── resumes/
-│ └── jobs/
+│   ├── resumes/
+│   └── jobs/
 ├── scripts/
-│ ├── text_extraction.py
-│ ├── text_preprocessing.py
-│ ├── feature_extraction.py
-│ ├── model_training.py
-│ └── app.py
+│   ├── text_extraction.py
+│   ├── text_preprocessing.py
+│   ├── feature_extraction.py
+│   ├── model_training.py
+│   └── app.py
 ├── models/
-│ └── best_model.pkl
+│   └── best_model.pkl
 ├── intermediate_data/
 ├── templates/
-│ └── index.html
+│   └── index.html
 ├── static/
-│ ├── styles.css
-│ └── script.js
+│   ├── styles.css
+│   └── script.js
 ├── Dockerfile
 ├── requirements.txt
 └── README.md
-
-bash
-Copy code
+\```
 
 ## Prerequisites
 
@@ -47,7 +39,7 @@ Copy code
 
 ### Step 1: Create Directories and Files
 
-```bash
+\```bash
 # Create project directories
 mkdir -p resume-matching/{data/{resumes,jobs},scripts,models,intermediate_data,templates,static}
 
@@ -59,111 +51,140 @@ touch resume-matching/static/styles.css
 touch resume-matching/static/script.js
 touch resume-matching/scripts/{text_extraction.py,text_preprocessing.py,feature_extraction.py,model_training.py,app.py}
 touch resume-matching/README.md
-Step 2: Install Dependencies
+\```
+
+### Step 2: Install Dependencies
+
 Create a virtual environment and install dependencies.
 
-bash
-Copy code
+\```bash
 cd resume-matching
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
-Step 3: Extract Text from PDFs
+\```
+
+### Step 3: Extract Text from PDFs
+
 Run the script to extract text from resumes and job descriptions.
 
-bash
-Copy code
+\```bash
 python scripts/text_extraction.py
-Step 4: Preprocess Text
+\```
+
+### Step 4: Preprocess Text
+
 Run the script to preprocess the extracted text.
 
-bash
-Copy code
+\```bash
 python scripts/text_preprocessing.py
-Step 5: Feature Extraction
+\```
+
+### Step 5: Feature Extraction
+
 Run the script to extract features using TF-IDF.
 
-bash
-Copy code
+\```bash
 python scripts/feature_extraction.py
-Step 6: Model Training
+\```
+
+### Step 6: Model Training
+
 Run the script to train the machine learning model.
 
-bash
-Copy code
+\```bash
 python scripts/model_training.py
-Step 7: Test the Flask App Locally
-Create and activate a virtual environment:
+\```
 
-bash
-Copy code
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-Run the Flask app:
+### Step 7: Test the Flask App Locally
 
-bash
-Copy code
-python scripts/app.py
-Open your web browser and go to:
+1. **Create and activate a virtual environment:**
 
-plaintext
-Copy code
-http://localhost:5000
-Step 8: Build and Run Docker Container
-Build the Docker image:
+    \```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    \```
 
-bash
-Copy code
-docker build -t resume-matching .
-Run the Docker container:
+2. **Run the Flask app:**
 
-bash
-Copy code
-docker run -p 5000:5000 resume-matching
-Check the Docker logs for any errors:
+    \```bash
+    python scripts/app.py
+    \```
 
-bash
-Copy code
-docker logs <container_id>
-Open your web browser and go to:
+3. **Open your web browser and go to:**
 
-plaintext
-Copy code
-http://localhost:5000
-Step 9: Deploy on AWS
-Prerequisites
-AWS CLI: Install and configure the AWS CLI.
-ECR Repository: Create an ECR repository to store the Docker image.
-Steps
-Tag the Docker image:
+    \```plaintext
+    http://localhost:5000
+    \```
 
-bash
-Copy code
-docker tag resume-matching:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/resume-matching:latest
-Login to ECR:
+### Step 8: Build and Run Docker Container
 
-bash
-Copy code
-aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
-Push the Docker image to ECR:
+1. **Build the Docker image:**
 
-bash
-Copy code
-docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/resume-matching:latest
-Create an ECS Cluster and Task Definition:
-Follow the AWS ECS documentation to create an ECS cluster and task definition to run your Docker container.
+    \```bash
+    docker build -t resume-matching .
+    \```
 
-Run the Task:
-Use the ECS console to run the task on your cluster.
+2. **Run the Docker container:**
 
-Step 10: Monitoring
+    \```bash
+    docker run -p 5000:5000 resume-matching
+    \```
+
+3. **Check the Docker logs for any errors:**
+
+    \```bash
+    docker logs <container_id>
+    \```
+
+4. **Open your web browser and go to:**
+
+    \```plaintext
+    http://localhost:5000
+    \```
+
+### Step 9: Deploy on AWS
+
+#### Prerequisites
+
+1. **AWS CLI:** Install and configure the AWS CLI.
+2. **ECR Repository:** Create an ECR repository to store the Docker image.
+
+#### Steps
+
+1. **Tag the Docker image:**
+
+    \```bash
+    docker tag resume-matching:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/resume-matching:latest
+    \```
+
+2. **Login to ECR:**
+
+    \```bash
+    aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+    \```
+
+3. **Push the Docker image to ECR:**
+
+    \```bash
+    docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/resume-matching:latest
+    \```
+
+4. **Create an ECS Cluster and Task Definition:**
+   Follow the AWS ECS documentation to create an ECS cluster and task definition to run your Docker container.
+
+5. **Run the Task:**
+   Use the ECS console to run the task on your cluster.
+
+### Step 10: Monitoring
+
 Use CloudWatch to monitor your application logs and performance. Set up alarms and metrics as needed.
 
-Step 11: Cleanup
+### Step 11: Cleanup
+
 When you're done, clean up your resources to avoid unnecessary charges.
 
-bash
-Copy code
+\```bash
 # Stop the Docker container
 docker stop <container_id>
 
@@ -175,23 +196,17 @@ docker rmi resume-matching
 
 # Deactivate the virtual environment
 deactivate
-Contributing
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Make your changes.
-Commit your changes (git commit -am 'Add new feature').
-Push to the branch (git push origin feature-branch).
-Create a new Pull Request.
-License
-This project is licensed under the MIT License.
+\```
 
-vbnet
-Copy code
+## Contributing
 
-This README file provides a comprehensive guide to setting up, running, and deploying the resume matching system. Follow these steps carefully to ensure everything works as expected. If you encounter any issues, please refer to the relevant documentation or seek assistance.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -am 'Add new feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Create a new Pull Request.
 
+## License
 
-
-
-
-
+    
