@@ -10,3 +10,4 @@ RUN apt-get update && apt-get install -y procps \
 EXPOSE 5000
 
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "--log-level", "debug", "--access-logfile", "-", "scripts.app:app"]
+
