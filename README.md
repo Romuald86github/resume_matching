@@ -46,7 +46,11 @@ resume-matching/
 mkdir -p resume-matching/{data/{resumes,jobs},scripts,models,intermediate_data,templates,static}
 
 ```
+
+
 # Create empty files
+
+```
 touch resume-matching/requirements.txt
 touch resume-matching/Dockerfile
 touch resume-matching/templates/index.html
@@ -61,90 +65,107 @@ touch resume-matching/README.md
 Create a virtual environment and install dependencies.
 
 \```bash
+
+```
 cd resume-matching
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
-\```
+```
 
 ### Step 3: Extract Text from PDFs
 
 Run the script to extract text from resumes and job descriptions.
 
 \```bash
+
+```
 python scripts/text_extraction.py
-\```
+```
 
 ### Step 4: Preprocess Text
 
 Run the script to preprocess the extracted text.
 
 \```bash
+
+```
 python scripts/text_preprocessing.py
-\```
+```
 
 ### Step 5: Feature Extraction
 
 Run the script to extract features using TF-IDF.
 
 \```bash
+
+```
 python scripts/feature_extraction.py
-\```
+```
 
 ### Step 6: Model Training
 
 Run the script to train the machine learning model.
 
 \```bash
+
+```
 python scripts/model_training.py
-\```
+```
 
 ### Step 7: Test the Flask App Locally
 
 1. **Create and activate a virtual environment:**
 
     \```bash
+   ```
     python -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    \```
+   ```
 
-2. **Run the Flask app:**
+3. **Run the Flask app:**
 
     \```bash
+   ```
     python scripts/app.py
-    \```
+   ```
 
-3. **Open your web browser and go to:**
+5. **Open your web browser and go to:**
 
     \```plaintext
+   ```
     http://localhost:5000
-    \```
+   ```
 
 ### Step 8: Build and Run Docker Container
 
 1. **Build the Docker image:**
 
     \```bash
+   ```
     docker build -t resume-matching .
-    \```
+   ```
 
-2. **Run the Docker container:**
+3. **Run the Docker container:**
 
     \```bash
+   ```
     docker run -p 5000:5000 resume-matching
-    \```
+   ```
 
-3. **Check the Docker logs for any errors:**
+5. **Check the Docker logs for any errors:**
 
     \```bash
+   ```
     docker logs <container_id>
-    \```
+   ```
 
-4. **Open your web browser and go to:**
+7. **Open your web browser and go to:**
 
     \```plaintext
+   ```
     http://localhost:5000
-    \```
+   ```
 
 ### Step 9: Deploy on AWS
 
@@ -158,25 +179,28 @@ python scripts/model_training.py
 1. **Tag the Docker image:**
 
     \```bash
+   ```
     docker tag resume-matching:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/resume-matching:latest
-    \```
+   ```
 
-2. **Login to ECR:**
+3. **Login to ECR:**
 
     \```bash
+   ```
     aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
-    \```
+   ```
 
-3. **Push the Docker image to ECR:**
+5. **Push the Docker image to ECR:**
 
     \```bash
+   ```
     docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/resume-matching:latest
-    \```
+   ```
 
-4. **Create an ECS Cluster and Task Definition:**
+7. **Create an ECS Cluster and Task Definition:**
    Follow the AWS ECS documentation to create an ECS cluster and task definition to run your Docker container.
 
-5. **Run the Task:**
+8. **Run the Task:**
    Use the ECS console to run the task on your cluster.
 
 ### Step 10: Monitoring
@@ -189,17 +213,21 @@ When you're done, clean up your resources to avoid unnecessary charges.
 
 \```bash
 # Stop the Docker container
+```
 docker stop <container_id>
-
+```
 # Remove the Docker container
+```
 docker rm <container_id>
-
+```
 # Remove the Docker image
+```
 docker rmi resume-matching
-
+```
 # Deactivate the virtual environment
+```
 deactivate
-\```
+```
 
 ## Contributing
 
