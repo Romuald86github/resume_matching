@@ -4,7 +4,7 @@ This project is designed to automatically match resumes with job descriptions us
 
 ## Project Structure
 
-\```
+```
 resume-matching/
 ├── data/
 │   ├── resumes/
@@ -26,7 +26,7 @@ resume-matching/
 ├── Dockerfile
 ├── requirements.txt
 └── README.md
-\```
+```
 
 ## Prerequisites
 
@@ -41,6 +41,8 @@ resume-matching/
 
 \```bash
 # Create project directories
+
+```
 mkdir -p resume-matching/{data/{resumes,jobs},scripts,models,intermediate_data,templates,static}
 
 ```
