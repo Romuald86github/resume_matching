@@ -43,6 +43,7 @@ resume-matching/
 # Create project directories
 mkdir -p resume-matching/{data/{resumes,jobs},scripts,models,intermediate_data,templates,static}
 
+```
 # Create empty files
 touch resume-matching/requirements.txt
 touch resume-matching/Dockerfile
@@ -51,7 +52,7 @@ touch resume-matching/static/styles.css
 touch resume-matching/static/script.js
 touch resume-matching/scripts/{text_extraction.py,text_preprocessing.py,feature_extraction.py,model_training.py,app.py}
 touch resume-matching/README.md
-\```
+```
 
 ### Step 2: Install Dependencies
 
